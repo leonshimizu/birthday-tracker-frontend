@@ -103,10 +103,12 @@ export default {
         })
     },
     deleteFunction: function(theBirthday) {
-      console.log("in the delete function");
-      console.log(theBirthday.name);
+      // console.log("in the delete function");
+      // console.log(theBirthday.name);
+      var index = this.birthdays.indexOf(theBirthday);
+      this.birthdays.splice(index, 1);
       axios
-        .delete(`http://localhost:3000/${theBirthday.id}`)
+        .delete(`http://localhost:3000/birthdays/${theBirthday.id}`)
         .then(response => {
           console.log(response.data);
         })
