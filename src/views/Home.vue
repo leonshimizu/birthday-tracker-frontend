@@ -5,10 +5,10 @@
     <button v-on:click="createModal()">New birthday</button>
     <dialog id="create-modal">
       <form type="dialog">
-        <input type="text" v-model="newBirthday.name">
-        <input type="text" v-model="newBirthday.month">
-        <input type="text" v-model="newBirthday.day">
-        <input type="text" v-model="newBirthday.year">
+        <input type="text" v-model="name">
+        <input type="text" v-model="month">
+        <input type="text" v-model="day">
+        <input type="text" v-model="year">
         <button v-on:click="createFunction">Add</button>
         <button>Close</button>
       </form>
@@ -60,10 +60,10 @@ export default {
       console.log("in the create function");
       axios
         .post('http://localhost:3000/birthdays', {
-          name: this.newBirthday.name,
-          month: this.newBirthday.month,
-          day: this.newBirthday.day,
-          year: this.newBirthday.year
+          name: this.name,
+          month: this.month,
+          day: this.day,
+          year: this.year
         })
         .then(response => {
           console.log(response.data);
