@@ -2,7 +2,24 @@
   <div class="home">
     {{ message }}
     <h1>Contacts:</h1>
-    {{ birthdays }}
+    <button v-on:click="createModal()">New birthday</button>
+    <dialog id="create-modal">
+      <form type="dialog">
+        <input type="text" v-model="newBirthday.name">
+        <input type="text" v-model="newBirthday.month">
+        <input type="text" v-model="newBirthday.day">
+        <input type="text" v-model="newBirthday.year">
+        <button v-on:click="createFunction">Add</button>
+        <button>Close</button>
+      </form>
+    </dialog>
+    <ul>
+      <li v-for="birthday in birthdays" :key="birthday.id">
+        {{ birthday.id }}
+        {{ birthday.name }}
+      </li>
+    </ul>
+    <!-- {{ birthdays }} -->
   </div>
 </template>
 
@@ -14,7 +31,12 @@ export default {
   data: function() {
     return {
       message: "Hello World",
-      birthdays: []
+      birthdays: [],
+      name: "Name",
+      month: "Month",
+      day: "Day",
+      year: "Year",
+      newBirthday: {}
     }
   },
   created: function() {
@@ -28,6 +50,24 @@ export default {
         .then(response => {
           console.log(response.data);
           this.birthdays = response.data;
+        })
+    },
+    createModal: function() {
+      console.log("in the create modal");
+      document.querySelector("#create-modal").showModal();
+    },
+    createFunction: function() {
+      console.log("in the create function");
+      axios
+        .post('http://localhost:3000/birthdays', {
+          name: this.newBirthday.name,
+          month: this.newBirthday.month,
+          day: this.newBirthday.day,
+          year: this.newBirthday.year
+        })
+        .then(response => {
+          console.log(response.data);
+          this.birthdays.push(response.data);
         })
     }
   }
